@@ -1,0 +1,64 @@
+template_kind: agent_contract
+template_version: '1.0'
+agent:
+  id: credit-expert
+  display_name: Credit Specialist
+  owner: credit-domain
+  version: '0.1.0'
+  purpose: Assess creditworthiness, DTI, and loan history for lending decisions
+  risk_tier: medium
+scope:
+  users: ['bank_officer', 'demo_user']
+  tenants: shb-demo
+  in_scope:
+    - credit_score_lookup
+    - dti_check
+    - loan_history
+    - credit_policy_rag
+  prohibited:
+    - approve_loan_final
+    - money_movement
+input_contract:
+  schema_reference: schemas/credit_task.v1
+  classifications_allowed: [internal, customer_financial]
+  max_size: 64kb
+output_contract:
+  schema_reference: schemas/credit_assessment.v1
+  required_evidence: [tool_result_refs, policy_citations]
+  canonical_stream_contract: docs/architecture/audit-observability.md
+planning:
+  mode: bounded_adaptive_loop
+  max_steps: 8
+  timeout: 120s
+  replanning_boundary: within_credit_tools_only
+tools:
+  allowlist:
+    - query_credit_score@v1
+    - check_dti@v1
+    - get_loan_history@v1
+    - search_credit_policy@v1
+  default_write_policy: deny
+memory:
+  policy_reference: config/policies/memory-default.yaml
+  context_budget: 8000
+guardrails:
+  hitl_policy_reference: config/policies/hitl-default.yaml
+  confidence_escalation_threshold: 0.7
+  cost_budget: 'USD 0.5 per run demo'
+  rate_limit: 60 tool calls per run
+runtime_portability:
+  required_ports: [ChatRuntime, MemoryStore, ToolRegistry]
+  public_contract_must_not_expose_vendor_types: true
+audit:
+  event_schema_reference: docs/architecture/audit-observability.md
+  retention_policy_reference: config/policies/audit-retention.yaml
+evaluation:
+  dataset_reference: docs/demo/benchmark-cases.md
+  acceptance_thresholds:
+    task_success: 0.85
+    unsafe_action_rate: 0
+    cross_tenant_leakage: '0'
+operations:
+  kill_switch_owner: platform-oncall
+  runbook_reference: docs/demo/runbook.md
+  support_slo: demo-only

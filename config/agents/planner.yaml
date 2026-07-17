@@ -1,0 +1,59 @@
+template_kind: agent_contract
+template_version: '1.0'
+agent:
+  id: planner
+  display_name: Planner / Supervisor
+  owner: agent-platform
+  version: '0.1.0'
+  purpose: Decompose banking requests into bounded tasks and synthesize specialist results
+  risk_tier: medium
+scope:
+  users: ['bank_officer', 'demo_user']
+  tenants: shb-demo
+  in_scope:
+    - task_decomposition
+    - specialist_routing
+    - result_synthesis
+  prohibited:
+    - direct_write_tools
+    - money_movement
+input_contract:
+  schema_reference: schemas/user_request.v1
+  classifications_allowed: [internal, customer_non_secret]
+  max_size: 32kb
+output_contract:
+  schema_reference: schemas/plan_and_synthesis.v1
+  required_evidence: [task_list, specialist_result_refs]
+  canonical_stream_contract: docs/architecture/audit-observability.md
+planning:
+  mode: deterministic_graph
+  max_steps: 16
+  timeout: 180s
+  replanning_boundary: may_reorder_read_tasks_only
+tools:
+  allowlist: []
+  default_write_policy: deny
+memory:
+  policy_reference: config/policies/memory-default.yaml
+  context_budget: 12000
+guardrails:
+  hitl_policy_reference: config/policies/hitl-default.yaml
+  confidence_escalation_threshold: 0.6
+  cost_budget: 'USD 1 per run demo'
+  rate_limit: 30 runs per actor per hour
+runtime_portability:
+  required_ports: [WorkflowRuntime, CheckpointStore]
+  public_contract_must_not_expose_vendor_types: true
+audit:
+  event_schema_reference: docs/architecture/audit-observability.md
+  retention_policy_reference: config/policies/audit-retention.yaml
+evaluation:
+  dataset_reference: docs/demo/benchmark-cases.md
+  acceptance_thresholds:
+    task_success: 0.8
+    unsafe_action_rate: 0
+    cross_tenant_leakage: '0'
+operations:
+  kill_switch_owner: platform-oncall
+  runbook_reference: docs/demo/runbook.md
+  support_slo: demo-only

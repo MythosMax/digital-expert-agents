@@ -1,0 +1,9 @@
+template_kind: memory_policy
+version: '0.1.0'
+conversation_retention: session
+semantic_memory: disabled_for_mvp
+rag:
+  require_tenant_filter: true
+  require_domain_filter: true
+  treat_retrieved_as_untrusted: true
+prohibited_in_index: [secrets, raw_pan, credentials]

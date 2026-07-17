@@ -1,0 +1,5 @@
+template_kind: audit_retention
+version: '0.1.0'
+retention: 90d_demo
+pii_redaction: required
+chain_of_thought: never_store

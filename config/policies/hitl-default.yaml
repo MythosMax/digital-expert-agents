@@ -1,0 +1,16 @@
+template_kind: hitl_policy
+version: '0.1.0'
+default_write_policy: require_approval
+rules:
+  - match: { effect: read }
+    approval: none
+  - match: { effect: write_reversible }
+    approval: required
+    expiry: 30m
+  - match: { effect: write_irreversible }
+    approval: required
+    expiry: 15m
+    approver_roles: [bank_officer, compliance_officer]
+escalation:
+  confidence_below: 0.7
+  budget_exceeded: true

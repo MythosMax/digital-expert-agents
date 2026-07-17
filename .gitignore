@@ -1,0 +1,47 @@
+# Digital Expert Agents — .gitignore
+
+# Secrets & local env
+.env
+.env.*
+!.env.example
+secrets.env
+*.pem
+credentials.json
+
+# Harness durable state
+harness.db
+harness.db-*
+scripts/bin/harness-cli
+
+# Dependencies / build
+node_modules/
+.pnpm-store/
+dist/
+build/
+.next/
+.turbo/
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs / coverage
+*.log
+coverage/
+.coverage
+htmlcov/
+
+# Local data dumps
+*.sqlite
+tmp/
+.cache/
