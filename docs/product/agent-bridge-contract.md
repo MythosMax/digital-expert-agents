@@ -15,5 +15,3 @@ Presented as `Authorization: Bearer` on `/v1/agent/*` only.
 - `POST /v1/agent/transfers/draft`
 
 Agents never execute transfers. Correlation: `conversationId` + `traceId`.
-
-Aligned with sibling `web-template` AI-agent contract.

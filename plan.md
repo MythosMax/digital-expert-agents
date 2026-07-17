@@ -41,8 +41,8 @@ apps/web (Next.js) ──SSE──► apps/agent-api (FastAPI)
 
 | Quyết định | Choice | Lý do |
 |---|---|---|
-| Runtime | LangGraph supervisor | Checkpoint, HITL interrupt, đúng template |
-| Banking API | NestJS + agent-bridge | Contract sẵn từ `web-template` |
+| Runtime | LangGraph supervisor | Checkpoint, HITL interrupt, state graph |
+| Banking API | NestJS + agent-bridge | Scoped JWT, draft-only writes |
 | Frontend | Next.js | Dashboard + chat + design system |
 | Vector | pgvector (cùng Postgres) | Ít infra cho demo |
 | Observe | Canonical events + (optional) Langfuse | Trace cho judges |
@@ -182,11 +182,11 @@ Conductor (coding): 1 người giữ intake → proof → trace theo [`docs/harn
 
 | Rủi ro | Mitigation |
 |---|---|
-| Scaffold chậm | Dùng prompts từ `web-template` + skeleton sẵn; vertical slice sớm |
+| Scaffold chậm | Bám STRUCTURE.md + vertical slice sớm; tránh dựng full stack trước demo |
 | LLM flaky lúc demo | Fallback trace JSON cho BC-05; cache 1 happy-path run |
 | Hallucinate số liệu | Số chỉ từ tools; RAG chỉ policy text + citation |
 | Scope creep domain | Chỉ CIF-12345 + limit-increase; không build full loan OS |
-| Hai template lệch layer | `STRUCTURE.md` + part harness là SoT; không invent layer 3 |
+| Architecture drift | `STRUCTURE.md` + part harness là SoT; không invent layer mới |
 
 ---
 

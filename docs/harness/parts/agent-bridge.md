@@ -9,7 +9,7 @@ with scoped service tokens on `/v1/agent/*` — never user HttpOnly cookies.
 
 - `apps/api/` (NestJS modules + `integrations/agent-bridge`)
 - `packages/contracts/`
-- Sibling reference: `../web-template/integrations/2026-07-16 - ai-agent-contract.md`
+- Product contract: `docs/product/agent-bridge-contract.md`
 
 ## MVP endpoints
 

@@ -31,16 +31,6 @@ scripts/              # harness schema + CLI hooks
 infra/                # docker-compose / UAT
 ```
 
-## Relationship to sibling templates
-
-| Sibling | Reuse |
-|---|---|
-| `../agent-flatform` | Agent kernel, LangGraph mapping, harness model, tool/HITL policies |
-| `../web-template` | Next.js + NestJS banking shell, agent-bridge contract, design system |
-
-This repo is the **product monorepo** that combines both tracks for the Digital
-Expert Agents challenge.
-
 ## Harness (change control)
 
 Material changes go through intake → work item → proof → trace.

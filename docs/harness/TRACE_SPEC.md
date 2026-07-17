@@ -1,7 +1,7 @@
 # Trace Specification
 
 Traces record what happened during a harness task. Depth must match the risk
-lane. Format follows the agent-flatform TRACE_SPEC pattern.
+lane.
 
 ## Required fields by tier
 

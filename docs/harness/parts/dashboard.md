@@ -10,7 +10,6 @@ and collaboration flows. Primary hackathon deliverable surface for judges.
 - `apps/web/` (Next.js)
 - Canonical event stream from `apps/agent-api`
 - Design tokens from `packages/design-tokens/`
-- Sibling patterns: `../web-template` prompts + design-system
 
 ## MVP panels
 
@@ -52,7 +51,7 @@ and collaboration flows. Primary hackathon deliverable surface for judges.
 1. This file
 2. `docs/architecture/audit-observability.md`
 3. `docs/product/dashboard.md`
-4. Frontend design rules in sibling `web-template` if styling
+4. `packages/design-tokens/` when styling
 
 ## Proof checklist
 
